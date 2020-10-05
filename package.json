@@ -1,5 +1,10 @@
 {
     "name": "deep-non-null",
+    "version": "0.0.1",
+    "scripts": {
+        "test": "ava tests/index.test.js",
+        "build": "tsc && tsc -declaration --emitDeclarationOnly"
+    },
     "devDependencies": {
         "@types/jsonpath": "^0.2.0",
         "@types/lodash": "^4.14.161",

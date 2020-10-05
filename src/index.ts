@@ -8,7 +8,7 @@ import stringify from 'fast-json-stable-stringify';
  * A custom error class to be thrown if we encounter a null value
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
  */
-export class DeepNotNullError extends Error {
+export class DeepNonNullError extends Error {
     constructor(...params: Array<unknown>) {
         // Pass remaining arguments (including vendor specific ones) to parent constructor
         super(
@@ -18,10 +18,10 @@ export class DeepNotNullError extends Error {
 
         // Maintains proper stack trace for where our error was thrown (only available on V8)
         if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, DeepNotNullError);
+            Error.captureStackTrace(this, DeepNonNullError);
         }
 
-        this.name = 'DeepNotNullError';
+        this.name = 'DeepNonNullError';
     }
 }
 
@@ -50,12 +50,12 @@ export default function isDeepNonNull<T>(
             const { path, node } = this;
 
             if (node == null) {
-                throw new DeepNotNullError(`${path.join('.')} is null or undefined`);
+                throw new DeepNonNullError(`${path.join('.')} is null or undefined`);
             }
         });
     } catch (error) {
         // Check if it's not our error - we should always throw in this case
-        if (error.name !== 'DeepNotNullError') {
+        if (error.name !== 'DeepNonNullError') {
             throw error;
         }
 
@@ -96,12 +96,12 @@ export function isDeepNonNullWithAllowedPaths<T>(obj: T, _options: Options = {})
             const { path, node } = this;
 
             if (node == null && !allowedNullSet.has(stringify(path))) {
-                throw new DeepNotNullError(`${path.join('.')} is null or undefined`);
+                throw new DeepNonNullError(`${path.join('.')} is null or undefined`);
             }
         });
     } catch (error) {
         // Check if it's not our error - we should always throw in this case
-        if (error.name !== 'DeepNotNullError') {
+        if (error.name !== 'DeepNonNullError') {
             throw error;
         }
 

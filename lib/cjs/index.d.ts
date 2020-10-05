@@ -3,7 +3,7 @@ import { DeepNonNullable } from 'utility-types';
  * A custom error class to be thrown if we encounter a null value
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
  */
-export declare class DeepNotNullError extends Error {
+export declare class DeepNonNullError extends Error {
     constructor(...params: Array<unknown>);
 }
 export interface Options {
