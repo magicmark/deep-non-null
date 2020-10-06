@@ -34,7 +34,7 @@ function MyComponent() {
     const { data, error, loading } = useQuery(GET_MY_DATA);
 
     if (loading) return 'Loading...';
-    if (error) return error;
+    if (error) throw error;
     if (!isDeepNonNull) throw new Error('Response contained null attributes');
 
     // Everything in `data` is guaranteed to be not null - which typescript should know about
@@ -47,7 +47,7 @@ _(Our 'real world' example doesn't print the attribute that was null to avoid lo
 ## Install
 
 ```
-$ yarn add --dev deep-non-null
+$ yarn add deep-non-null
 ```
 
 ## API
